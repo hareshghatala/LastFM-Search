@@ -30,7 +30,7 @@ class ArtistSearch {
         }
         
         self.searchKeyword = keyword ?? self.searchKeyword
-        self.currentpage = nextPageSearch ? self.currentpage + 1 : self.currentpage
+        self.currentpage = nextPageSearch ? self.currentpage + 1 : 1
         
         let params: Parameters = [ParameterKeys.methodKey: ParameterValues.artistSearchMethod,
                                   ParameterKeys.api_keyKey: ParameterValues.apiKey,
