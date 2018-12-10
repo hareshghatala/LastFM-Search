@@ -341,6 +341,37 @@ extension DashboardSeachViewController: UICollectionViewDelegate {
             return
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selfType = type(of: self)
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let albumDetailsVC = storyBoard.instantiateViewController(withIdentifier: "MediaDetailsViewController") as! MediaDetailsViewController
+        
+        switch (self.selectedMediaIndex, indexPath.section) {
+        case (.all, 0),
+             (.albums, 0):
+            guard let albumItem = self.mediaItems[selfType.albumsKey]?[indexPath.row] as? Album else { return }
+            albumDetailsVC.album = albumItem
+            albumDetailsVC.viewType = .albums
+            
+        case (.all, 1),
+             (.artists, 0):
+            guard let artistsItem = self.mediaItems[selfType.artistsKey]?[indexPath.row] as? Artist else { return }
+            albumDetailsVC.artist = artistsItem
+            albumDetailsVC.viewType = .artists
+            
+        case (.all, 2),
+             (.songs, 0):
+            guard let songItem = self.mediaItems[selfType.songsKey]?[indexPath.row] as? Song else { return }
+            albumDetailsVC.song = songItem
+            albumDetailsVC.viewType = .songs
+            
+        default:
+            debugPrint("No section found")
+        }
+        
+        self.navigationController?.pushViewController(albumDetailsVC, animated: true)
+    }
 }
 
 // MARK: - UICollectionView Delegate FlowLayout
