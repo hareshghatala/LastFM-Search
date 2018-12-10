@@ -16,6 +16,7 @@
 		6E7945E621BEF3C7001295F1 /* DashboardSeachViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7945E521BEF3C7001295F1 /* DashboardSeachViewController.swift */; };
 		6E7945E821BEF51E001295F1 /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7945E721BEF51E001295F1 /* HeaderCollectionReusableView.swift */; };
 		6E7945EB21BEF5A1001295F1 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7945EA21BEF5A1001295F1 /* MediaCollectionViewCell.swift */; };
+		6E7945ED21BEF761001295F1 /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7945EC21BEF761001295F1 /* NetworkServices.swift */; };
 		C70443F258FEEA3262A5E9BC /* Pods_LastFM_SearchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6FECD3ECCA4AE5D66B4D940 /* Pods_LastFM_SearchTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		6E7945E521BEF3C7001295F1 /* DashboardSeachViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSeachViewController.swift; sourceTree = "<group>"; };
 		6E7945E721BEF51E001295F1 /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		6E7945EA21BEF5A1001295F1 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
+		6E7945EC21BEF761001295F1 /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		8EA23115795EE4BBE74F5CF2 /* Pods-LastFM Search.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFM Search.release.xcconfig"; path = "Pods/Target Support Files/Pods-LastFM Search/Pods-LastFM Search.release.xcconfig"; sourceTree = "<group>"; };
 		B21640587F35AB176B05FEEF /* Pods-LastFM SearchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LastFM SearchTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LastFM SearchTests/Pods-LastFM SearchTests.release.xcconfig"; sourceTree = "<group>"; };
 		E5C7B481770A1FEC0018C706 /* Pods_LastFM_Search.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LastFM_Search.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +162,7 @@
 		6E7945E421BEF346001295F1 /* Network Handler */ = {
 			isa = PBXGroup;
 			children = (
+				6E7945EC21BEF761001295F1 /* NetworkServices.swift */,
 			);
 			path = "Network Handler";
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E7945ED21BEF761001295F1 /* NetworkServices.swift in Sources */,
 				6E7945E621BEF3C7001295F1 /* DashboardSeachViewController.swift in Sources */,
 				6E7945E821BEF51E001295F1 /* HeaderCollectionReusableView.swift in Sources */,
 				6E7945C121BEF0AE001295F1 /* AppDelegate.swift in Sources */,
