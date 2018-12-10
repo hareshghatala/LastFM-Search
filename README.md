@@ -17,17 +17,22 @@ to the bottom.
 - Go to: https://www.last.fm.api/account/create
 
 ##### API Documentation
-- Introduction
+- *Introduction*
 - https://www.last.fm/api/intro
-- Album
+- *Album*
 - http://www.last.fm/api/show/album.search
 - https://www.last.fm/api/show/album.getInfo
-- Artist
+- *Artist*
 - https://www.last.fm/api/show/artist.search
 - https://www.last.fm/api/show/artist.getInfo
-- Track/Song
+- *Track/Song*
 - https://www.last.fm/api/show/track.search
 - https://www.last.fm/api/show/track.getInfo
+
+## Third Party Dependency
+- Alamofire [Git Link](https://github.com/Alamofire/Alamofire)
+- AlamofireImage [Git Link](https://github.com/Alamofire/AlamofireImage)
+
 
 ---
 ## Communication
