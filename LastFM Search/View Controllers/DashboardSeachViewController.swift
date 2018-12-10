@@ -42,6 +42,9 @@ class DashboardSeachViewController: UIViewController {
     // MARK: - Variables
     private var mediaItems: [String: [Any]] = [:]
     private var selectedMediaIndex: MediaType = .all
+    private let album = AlbumSearch()
+    private let artist = ArtistSearch()
+    private let song = SongSearch()
     
     // MARK: - View lifecycle methods
     override func viewDidLoad() {
@@ -61,6 +64,48 @@ class DashboardSeachViewController: UIViewController {
     }
     
     private func searchMedia(with keyword: String? = nil, nextPageSearch: Bool = false) {
+        self.searchAlbumsMedia(with: keyword, nextPageSearch: nextPageSearch)
+        self.searchArtistsMedia(with: keyword, nextPageSearch: nextPageSearch)
+        self.searchSongsMedia(with: keyword, nextPageSearch: nextPageSearch)
+    }
+    
+    private func searchAlbumsMedia(with keyword: String?, nextPageSearch: Bool = false) {
+        self.album.searchAlbums(with: keyword, nextPageSearch: nextPageSearch, completionHandler: { albumList in
+            guard let albumList = albumList else { return }
+            if nextPageSearch {
+                self.mediaItems[type(of: self).albumsKey]?.append(contentsOf: albumList)
+            } else {
+                self.mediaItems[type(of: self).albumsKey] = albumList
+            }
+            self.collectionView.reloadData()
+            self.waitViewLabel.isHidden = true
+        })
+    }
+    
+    private func searchArtistsMedia(with keyword: String?, nextPageSearch: Bool = false) {
+        self.artist.searchArtist(with: keyword, nextPageSearch: nextPageSearch, completionHandler: { artistList in
+            guard let artistList = artistList else { return }
+            if nextPageSearch {
+                self.mediaItems[type(of: self).artistsKey]?.append(contentsOf: artistList)
+            } else {
+                self.mediaItems[type(of: self).artistsKey] = artistList
+            }
+            self.collectionView.reloadData()
+            self.waitViewLabel.isHidden = true
+        })
+    }
+    
+    private func searchSongsMedia(with keyword: String?, nextPageSearch: Bool = false) {
+        self.song.searchSong(with: keyword, nextPageSearch: nextPageSearch, completionHandler: { songList in
+            guard let songList = songList else { return }
+            if nextPageSearch {
+                self.mediaItems[type(of: self).songsKey]?.append(contentsOf: songList)
+            } else {
+                self.mediaItems[type(of: self).songsKey] = songList
+            }
+            self.collectionView.reloadData()
+            self.waitViewLabel.isHidden = true
+        })
     }
     
     fileprivate func sizeForCollectionViewItem() -> CGSize {
@@ -217,6 +262,45 @@ extension DashboardSeachViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
+        var title: String
+        var subtitle: String
+        var imageUrl: URL
+        switch (self.selectedMediaIndex, indexPath.section) {
+        case (.all, 0),
+             (.albums, 0):
+            guard let albumItem = self.mediaItems[selfType.albumsKey]?[indexPath.row] as? Album else {
+                return cell
+            }
+            title = albumItem.name
+            subtitle = albumItem.artist
+            imageUrl = albumItem.imageURL()
+            
+        case (.all, 1),
+             (.artists, 0):
+            guard let artistsItem = self.mediaItems[selfType.artistsKey]?[indexPath.row] as? Artist else {
+                return cell
+            }
+            title = artistsItem.name
+            subtitle = artistsItem.listenersString()
+            imageUrl = artistsItem.imageURL()
+            
+        case (.all, 2),
+             (.songs, 0):
+            guard let songItem = self.mediaItems[selfType.songsKey]?[indexPath.row] as? Song else {
+                return cell
+            }
+            title = songItem.name
+            subtitle = songItem.artist
+            imageUrl = songItem.imageURL()
+            
+        default:
+            title = ""
+            subtitle = ""
+            imageUrl = URL(fileURLWithPath: "")
+        }
+        
+        cell.setupMediaDetails(with: title, subtitle: subtitle, imageURL: imageUrl)
+        
         return cell
     }
     
@@ -225,6 +309,38 @@ extension DashboardSeachViewController: UICollectionViewDataSource {
 // MARK: - UICollectionView Delegate
 
 extension DashboardSeachViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let selfType = type(of: self)
+        switch self.selectedMediaIndex {
+        case .albums:
+            guard let mediaCount = self.mediaItems[selfType.albumsKey]?.count,
+                indexPath.row == mediaCount - 1,
+                let searchText = self.searchBar.text else {
+                    return
+            }
+            self.searchAlbumsMedia(with: searchText, nextPageSearch: true)
+            
+        case .artists:
+            guard let mediaCount = self.mediaItems[selfType.artistsKey]?.count,
+                indexPath.row == mediaCount - 1,
+                let searchText = self.searchBar.text else {
+                    return
+            }
+            self.searchArtistsMedia(with: searchText, nextPageSearch: true)
+            
+        case .songs:
+            guard let mediaCount = self.mediaItems[selfType.songsKey]?.count,
+                indexPath.row == mediaCount - 1,
+                let searchText = self.searchBar.text else {
+                    return
+            }
+            self.searchSongsMedia(with: searchText, nextPageSearch: true)
+            
+        default:
+            return
+        }
+    }
 }
 
 // MARK: - UICollectionView Delegate FlowLayout
